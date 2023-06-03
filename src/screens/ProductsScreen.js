@@ -1,16 +1,27 @@
 import { StyleSheet, Text, View, Image, FlatList, TouchableOpacity } from 'react-native';
 import React from 'react'
-import products from '../data/products';
 import { useNavigation } from '@react-navigation/native';
+import products from '../data/products';
+import {useSelector, useDispatch} from 'react-redux'
+import { productsSlice } from '../store/ProductsSlice';
 
 const ProductsScreen = ({navigation}) => {
   //const navigation = useNavigation();
+  
+  const dispatch = useDispatch(); 
+  const products = useSelector(state => state.products.products );
+  
   return (
     <FlatList 
     data={products}
     renderItem={({item}) => (
     <TouchableOpacity
-        onPress={() => navigation.navigate('Products Detail') }
+        onPress={() => {
+          // update selected product 
+          //dispatch(productsSlice.actions.setSelectedProduct(item.id));  
+          dispatch(productsSlice.actions.setSelectedProduct(item.id));
+          navigation.navigate('Products Detail') 
+        }}
        style={styles.itemContainer}>
       <Image source={{uri: item.image}}
       style={styles.image} />
