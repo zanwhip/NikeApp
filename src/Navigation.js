@@ -5,10 +5,14 @@ import ShoppingCart from "./screens/ShoppingCart";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Entypo from 'react-native-vector-icons/Entypo';
 import {TouchableOpacity, Text} from 'react-native'
-
+import { selectNumberOfItems } from "./store/cartSlice";
+import { useSelector } from "react-redux";
 const Stack = createNativeStackNavigator();
 
 const Navigation =() =>{
+    const numberOfItems = useSelector(selectNumberOfItems);
+ 
+
     return (
         <NavigationContainer>
             <Stack.Navigator screenOptions={{ contentStyle: {backgroundColor: 'white'} }} >
@@ -21,10 +25,10 @@ const Navigation =() =>{
                         onPress={() => navigation.navigate('Cart')}
                         style={{ flexDirection : 'row' }}>
                        <Entypo name="shopping-cart" size={18} color={'gray'}/>
-                       <Text style={{ marginLeft: 5, fontWeight: '500', fontSize: 10}}>1</Text>
+                       <Text style={{ marginLeft: 5, fontWeight: '500', fontSize: 10}}>{numberOfItems}</Text>
                     </TouchableOpacity>
                     ),
-                 })} 
+                 })}  
                 />
                 <Stack.Screen name="Products Detail" component={ProductDetailScreen} options={{presentation:'modal'}} />
                 <Stack.Screen name="Cart" component={ShoppingCart} options={{presentation:'modal'}}/>
